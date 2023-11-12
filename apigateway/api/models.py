@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    username = None
     login = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=150)
     email = models.CharField(max_length=50)
@@ -14,7 +13,7 @@ class User(AbstractUser):
     company = models.CharField(max_length=150)
 
     USERNAME_FIELD = 'login'
-    REQUIRED_FIELDS = ['name', 'password', 'email', 'surname', 'company']
+    REQUIRED_FIELDS = ['name', 'password', 'email', 'surname', 'company', 'username']
 
 
 class Image(models.Model):

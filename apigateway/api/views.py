@@ -18,18 +18,30 @@ from rest_framework.exceptions import NotFound
 
 # Create your views here.
 class RegisterView(APIView):
+    serializer_class = UserSerializer
+
+    @staticmethod
+    def generate_token(user: User):
+        try:
+            refresh = RefreshToken.for_user(user)
+            temp = dict()
+            temp.update(refresh=str(refresh))
+            temp.update(access=str(refresh.access_token))
+        except Exception as err:
+            print(err)
+            return None, 'error'
+
+        return temp, 'success'
+
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        refresh = RefreshToken.for_user(serializer.Meta.model)
-        temp = serializer.data
-        temp['refresh'] = str(refresh)
-        temp['access'] = str(refresh.access_token)
-        print(temp)
-        # serializer.data.__setattr__('access',)
-        # print(serializer.data)
-        return Response(temp)
+
+        temp, _ = self.generate_token(serializer.Meta.model)
+        serializer.data.update(temp)
+
+        return Response(serializer.data)
 
 
 class Service(APIView):
@@ -45,15 +57,31 @@ class Service(APIView):
 class ServicesStatus(APIView):
     permission_classes = (IsAuthenticated,)
     base_url = 'http://172.20.10.4:8001'
+
+    @staticmethod
+    def convert2base64(file, file_path) -> str:
+        try:
+            b64 = base64.b64encode(file.read())
+            decode64 = base64.b64decode(b64)
+        except Exception as err:
+            print(str(err))
+            return 'error'
+
+        try:
+            f = open(file_path, 'wb')
+            f.write(decode64)
+        except Exception as err:
+            print(str(err))
+            return 'error'
+
+        return 'success'
+
     def post(self, request, id, status):
         if status == 'process':
             file = request.FILES['image']
-            b64 = base64.b64encode(file.read())
-            decode64 = base64.b64decode(b64)
             file_path = f'media/images/{file._name}'
+            self.convert2base64(file, file_path)
             print(file_path)
-            with open(file_path, 'wb') as fl:
-                fl.write(decode64)
             files = {'image':   open(file_path, 'rb')}
             response = requests.post(url=self.base_url+'/models/predict/', files=files)
             return Response(response.json())

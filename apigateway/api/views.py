@@ -1,4 +1,7 @@
 import datetime
+
+from django.http import HttpResponseBadRequest
+
 from .models import Services
 import base64
 import jwt
@@ -14,6 +17,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
+import logging
 
 
 # Create your views here.
@@ -28,14 +32,18 @@ class RegisterView(APIView):
             temp.update(refresh=str(refresh))
             temp.update(access=str(refresh.access_token))
         except Exception as err:
-            print(err)
+            logging.exception(err)
             return None, 'error'
 
         return temp, 'success'
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer = UserSerializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except serializers.ValidationError:
+            logging.exception("Not valid request data")
+            return HttpResponseBadRequest("Not valid request data")
         serializer.save()
 
         temp, _ = self.generate_token(serializer.Meta.model)
@@ -49,7 +57,7 @@ class Service(APIView):
 
     def get(self, request):
         services = Services.objects.all()
-        print(services)
+        logging.log(services)
         serializer = ServicesSerializer(services, many=True).data
         return Response(serializer)
 
@@ -64,14 +72,14 @@ class ServicesStatus(APIView):
             b64 = base64.b64encode(file.read())
             decode64 = base64.b64decode(b64)
         except Exception as err:
-            print(str(err))
+            logging.exception(err)
             return 'error'
 
         try:
             f = open(file_path, 'wb')
             f.write(decode64)
         except Exception as err:
-            print(str(err))
+            logging.exception(err)
             return 'error'
 
         return 'success'
@@ -81,30 +89,15 @@ class ServicesStatus(APIView):
             file = request.FILES['image']
             file_path = f'media/images/{file._name}'
             self.convert2base64(file, file_path)
-            print(file_path)
-            files = {'image':   open(file_path, 'rb')}
-            response = requests.post(url=self.base_url+'/models/predict/', files=files)
+            logging.info(file_path)
+            files = {'image': open(file_path, 'rb')}
+            response = requests.post(url=self.base_url + '/models/predict/', files=files)
             return Response(response.json())
 
     def get(self, request, status):
         if status == 'status':
             uid = request.GET.get('uid', '')
-            request = requests.get('/model'+'?uid='+uid)
+            request = requests.get('/model' + '?uid=' + uid)
             return Response(request.json())
         else:
             raise NotFound
-
-# def image_upload_view(request):
-#     """Process images uploaded by users"""
-#     if request.method == 'POST':
-#         form = ImageForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             url = 'http://localhost:4255/process'
-#             res = requests.request('post', url, data=form.data)
-#             # Get the current instance object to display in the template
-#             img_obj = form.instance
-#             return render(request, 'index.html', {'form': form, 'img_obj': img_obj})
-#     else:
-#         form = ImageForm()
-#         return render(request, 'index.html', {'form': form})

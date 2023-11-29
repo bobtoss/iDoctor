@@ -7,7 +7,6 @@ from api.views import RegisterView, ServicesStatus
 class TestGenerateToken(TestCase):
     def setUp(self) -> None:
         User.objects.create_user(
-            username="test",
             login="test",
             surname="test",
             name="test",
@@ -16,7 +15,7 @@ class TestGenerateToken(TestCase):
         )
 
     def test_generate_token_for_user(self):
-        user = User.objects.get(username="test")
+        user = User.objects.get(login="test")
         self.assertEqual(RegisterView.generate_token(user)[1], 'success')
 
 

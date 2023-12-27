@@ -32,7 +32,7 @@ class RegisterView(APIView):
             temp.update(refresh=str(refresh))
             temp.update(access=str(refresh.access_token))
         except Exception as err:
-            logging.exception(err)
+            # logging.exception(err)
             return None, 'error'
 
         return temp, 'success'
@@ -42,7 +42,7 @@ class RegisterView(APIView):
         try:
             serializer.is_valid(raise_exception=True)
         except serializers.ValidationError:
-            logging.exception("Not valid request data")
+            # logging.exception("Not valid request data")
             return HttpResponseBadRequest("Not valid request data")
         serializer.save()
 
@@ -57,14 +57,14 @@ class Service(APIView):
 
     def get(self, request):
         services = Services.objects.all()
-        logging.log(services)
+        # logging.log(services)
         serializer = ServicesSerializer(services, many=True).data
         return Response(serializer)
 
 
-class ServicesStatus(APIView):
+class ServicesProcess(APIView):
     permission_classes = (IsAuthenticated,)
-    base_url = 'http://172.20.10.4:8001'
+    base_url = 'http://localhost:8001' # port of the service_1(seedDNA)
 
     @staticmethod
     def convert2base64(file, file_path) -> str:
@@ -72,24 +72,24 @@ class ServicesStatus(APIView):
             b64 = base64.b64encode(file.read())
             decode64 = base64.b64decode(b64)
         except Exception as err:
-            logging.exception(err)
+            # logging.exception(err)
             return 'error'
 
         try:
             f = open(file_path, 'wb')
             f.write(decode64)
         except Exception as err:
-            logging.exception(err)
+            # logging.exception(err)
             return 'error'
 
         return 'success'
 
-    def post(self, request, id, status):
-        if status == 'process':
+    def post(self, request, id):
+        if id == 1:
             file = request.FILES['image']
             file_path = f'media/images/{file._name}'
             self.convert2base64(file, file_path)
-            logging.info(file_path)
+            # logging.info(file_path)
             files = {'image': open(file_path, 'rb')}
             response = requests.post(url=self.base_url + '/models/predict/', files=files)
             return Response(response.json())

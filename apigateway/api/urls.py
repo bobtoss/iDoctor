@@ -8,5 +8,5 @@ urlpatterns = [
     path('auth/register/', RegisterView.as_view()),
     path('auth/refresh/', TokenRefreshView.as_view()),
     path('services/', Service.as_view()),
-    path('services/<str:id>/<str:status>', ServicesStatus.as_view()),
+    path('services/<int:id>/process/', ServicesProcess.as_view()),
 ]

@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5cbaf77-4661-4ccf-938f-21c0e08cf796" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apigateway/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apigateway/prometheus.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/64fbde61-582e-49a9-b429-431b9ac15555.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/64fbde61-582e-49a9-b429-431b9ac15555.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/64fbde61-582e-49a9-b429-431b9ac15555.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/api/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/api/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/apigateway/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/apigateway/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/apigateway/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/apigateway/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/django.log" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/django.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,25 +30,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Web-Dev-project/SHED&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/KBTU/Django Projects/backend_highload/SeedDNA",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\work\Backend Highload\apigateway\templates" />
@@ -77,6 +73,8 @@
       <workItem from="1699629365894" duration="4520000" />
       <workItem from="1700840577259" duration="3185000" />
       <workItem from="1700889074290" duration="5318000" />
+      <workItem from="1702191942252" duration="56000" />
+      <workItem from="1702192038737" duration="629000" />
     </task>
     <servers />
   </component>

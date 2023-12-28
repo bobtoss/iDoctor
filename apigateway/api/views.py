@@ -111,6 +111,4 @@ class UserInfo(viewsets.GenericViewSet):
 
     def get(self, request):
         data = UserSerializer(request.user)
-        return data.validated_data
-        pass
-
+        return Response(data.data)

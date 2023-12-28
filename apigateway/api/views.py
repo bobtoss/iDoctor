@@ -17,11 +17,13 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
+from rest_framework import mixins
+from rest_framework import viewsets
 import logging
 
 
 # Create your views here.
-class RegisterView(APIView):
+class RegisterViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     serializer_class = UserSerializer
 
     @staticmethod
@@ -52,8 +54,9 @@ class RegisterView(APIView):
         return Response(serializer.data)
 
 
-class Service(APIView):
+class Service(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
+    serializer_class = ServicesSerializer
 
     def get(self, request):
         services = Services.objects.all()
@@ -62,7 +65,7 @@ class Service(APIView):
         return Response(serializer)
 
 
-class ServicesProcess(APIView):
+class ServicesProcess(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     base_url = 'http://localhost:8001' # port of the service_1(seedDNA)
 
@@ -101,3 +104,13 @@ class ServicesProcess(APIView):
             return Response(request.json())
         else:
             raise NotFound
+
+
+class UserInfo(viewsets.GenericViewSet):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        data = UserSerializer(request.user)
+        return data.validated_data
+        pass
+

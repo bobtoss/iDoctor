@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from api.models import User
-from api.views import RegisterView, ServicesStatus
+from api.views import RegisterViewSet, ServicesStatus
 
 
 class TestGenerateToken(TestCase):
@@ -16,7 +16,7 @@ class TestGenerateToken(TestCase):
 
     def test_generate_token_for_user(self):
         user = User.objects.get(login="test")
-        self.assertEqual(RegisterView.generate_token(user)[1], 'success')
+        self.assertEqual(RegisterViewSet.generate_token(user)[1], 'success')
 
 
 class TestConvertBase64(TestCase):
